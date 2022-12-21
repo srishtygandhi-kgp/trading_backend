@@ -26,3 +26,19 @@
    (recipientslist
     :accessor recipientslist
     :initform nil)))
+
+(defun consume (a e)
+    (when (observe a e)
+    (update a e)))
+
+(defmethod observe ((a AGENT) (e EVENT))
+    T)
+
+(defmethod update :before ((a AGENT) (e MARKETUPDATE))
+    (when (null (timestamps a))
+        (push 0 (pls a))
+        (push 0 (fitnesses a)))
+    (push (timestamp e) (timestamp a))
+    (push (price e)(revalprices a))
+    (preprocess a e)
+    (format T ":BEFORE completed for agent ~A and event ~A~ %" a e))

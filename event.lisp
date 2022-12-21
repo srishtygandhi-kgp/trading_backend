@@ -5,3 +5,8 @@
    (value 
         :accessor value 
         :initarg :value)))
+
+(defclass MARKETUPDATE (EVENT)
+    ((security 
+        :accessor security 
+        :initarg :security)))
